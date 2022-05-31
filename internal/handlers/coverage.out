@@ -1,0 +1,23 @@
+mode: set
+github.com/calvarado2004/bookings/internal/handlers/handlers.go:21.47,25.2 1 1
+github.com/calvarado2004/bookings/internal/handlers/handlers.go:27.33,29.2 1 1
+github.com/calvarado2004/bookings/internal/handlers/handlers.go:31.67,38.2 3 1
+github.com/calvarado2004/bookings/internal/handlers/handlers.go:41.68,54.2 5 1
+github.com/calvarado2004/bookings/internal/handlers/handlers.go:56.71,58.2 1 1
+github.com/calvarado2004/bookings/internal/handlers/handlers.go:60.69,62.2 1 1
+github.com/calvarado2004/bookings/internal/handlers/handlers.go:64.71,66.2 1 1
+github.com/calvarado2004/bookings/internal/handlers/handlers.go:68.74,80.2 4 1
+github.com/calvarado2004/bookings/internal/handlers/handlers.go:83.78,85.16 2 0
+github.com/calvarado2004/bookings/internal/handlers/handlers.go:90.2,107.19 8 0
+github.com/calvarado2004/bookings/internal/handlers/handlers.go:121.2,124.66 2 0
+github.com/calvarado2004/bookings/internal/handlers/handlers.go:85.16,88.3 2 0
+github.com/calvarado2004/bookings/internal/handlers/handlers.go:107.19,118.3 4 0
+github.com/calvarado2004/bookings/internal/handlers/handlers.go:128.70,131.2 1 1
+github.com/calvarado2004/bookings/internal/handlers/handlers.go:133.75,136.2 1 1
+github.com/calvarado2004/bookings/internal/handlers/handlers.go:138.79,143.2 3 1
+github.com/calvarado2004/bookings/internal/handlers/handlers.go:150.79,157.16 3 1
+github.com/calvarado2004/bookings/internal/handlers/handlers.go:160.2,162.14 3 1
+github.com/calvarado2004/bookings/internal/handlers/handlers.go:157.16,159.3 1 0
+github.com/calvarado2004/bookings/internal/handlers/handlers.go:165.81,169.9 2 0
+github.com/calvarado2004/bookings/internal/handlers/handlers.go:176.2,183.4 4 0
+github.com/calvarado2004/bookings/internal/handlers/handlers.go:169.9,174.3 4 0

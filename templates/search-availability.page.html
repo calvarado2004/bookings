@@ -1,0 +1,73 @@
+{{template "base" .}}
+
+{{define "content"}}
+
+<div class="container">
+
+    <div class="row">
+      <div class="col-md-3"></div>
+
+      <div class="col-md-9">
+
+        <h1> Search for availability.</h1>
+
+        <form action="/availability" method="POST" novalidate class="needs-validation">
+          <input type="hidden" name="csrf_token" value="{{.CSRFToken}}">
+          <div class="row row-cols-lg-auto g-3 align-items-center" id="reservation-dates">
+            <div class="col">
+              <div class="form-group">
+                <input required class="form-control" type="text" name="start" placeholder="Arrival date">
+              </div>
+            </div>
+            <div class="col">
+              <div class="form-group">
+                <p>-</p>
+              </div>
+            </div>
+            <div class="col">
+              <div class="form-group">
+                <input required class="form-control" type="text" name="end" placeholder="Departure date">  
+              </div>
+            </div>
+          </div>
+
+          <hr>
+
+          <button type="submit" class="btn btn-primary">Search Availability</button>
+
+        </form>
+
+
+      </div>
+
+    </div>
+
+    <div class="row">
+
+      <div class="col">
+
+        <p id="myParagraph"> This is some text </p>
+
+        <p>
+          <button id="colorButton" class="btn btn-outline-secondary">Clic me</button>
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+  
+{{end}}
+
+{{ define "js"}}
+
+<script src="https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.1.2/dist/js/datepicker-full.min.js"></script>
+
+<script>
+    const elem = document.getElementById('reservation-dates');
+    const rangePicker = new DateRangePicker(elem, {
+        format: "dd/mm/yyyy",
+    });
+</script>
+{{ end }}

@@ -1,0 +1,18 @@
+mode: set
+github.com/calvarado2004/bookings/internal/forms/forms.go:17.29,19.2 1 1
+github.com/calvarado2004/bookings/internal/forms/forms.go:22.33,27.2 1 1
+github.com/calvarado2004/bookings/internal/forms/forms.go:29.43,30.31 1 1
+github.com/calvarado2004/bookings/internal/forms/forms.go:30.31,32.37 2 1
+github.com/calvarado2004/bookings/internal/forms/forms.go:32.37,34.4 1 1
+github.com/calvarado2004/bookings/internal/forms/forms.go:39.39,41.13 2 1
+github.com/calvarado2004/bookings/internal/forms/forms.go:44.2,44.13 1 1
+github.com/calvarado2004/bookings/internal/forms/forms.go:41.13,43.3 1 1
+github.com/calvarado2004/bookings/internal/forms/forms.go:47.57,50.21 2 1
+github.com/calvarado2004/bookings/internal/forms/forms.go:55.2,55.13 1 1
+github.com/calvarado2004/bookings/internal/forms/forms.go:50.21,53.3 2 1
+github.com/calvarado2004/bookings/internal/forms/forms.go:59.38,60.40 1 1
+github.com/calvarado2004/bookings/internal/forms/forms.go:60.40,62.3 1 1
+github.com/calvarado2004/bookings/internal/forms/errors.go:6.44,8.2 1 1
+github.com/calvarado2004/bookings/internal/forms/errors.go:11.42,13.18 2 1
+github.com/calvarado2004/bookings/internal/forms/errors.go:18.2,18.14 1 1
+github.com/calvarado2004/bookings/internal/forms/errors.go:13.18,17.3 1 1

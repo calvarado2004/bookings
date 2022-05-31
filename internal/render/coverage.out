@@ -1,0 +1,23 @@
+mode: set
+github.com/calvarado2004/bookings/internal/render/render.go:20.40,22.2 1 1
+github.com/calvarado2004/bookings/internal/render/render.go:25.84,33.2 5 1
+github.com/calvarado2004/bookings/internal/render/render.go:35.105,39.18 2 1
+github.com/calvarado2004/bookings/internal/render/render.go:46.2,47.9 2 1
+github.com/calvarado2004/bookings/internal/render/render.go:53.2,60.16 5 1
+github.com/calvarado2004/bookings/internal/render/render.go:65.2,65.12 1 1
+github.com/calvarado2004/bookings/internal/render/render.go:39.18,41.3 1 0
+github.com/calvarado2004/bookings/internal/render/render.go:41.8,44.3 1 1
+github.com/calvarado2004/bookings/internal/render/render.go:47.9,51.3 1 1
+github.com/calvarado2004/bookings/internal/render/render.go:60.16,63.3 2 0
+github.com/calvarado2004/bookings/internal/render/render.go:72.67,78.16 3 1
+github.com/calvarado2004/bookings/internal/render/render.go:82.2,82.29 1 1
+github.com/calvarado2004/bookings/internal/render/render.go:102.2,102.21 1 1
+github.com/calvarado2004/bookings/internal/render/render.go:78.16,80.3 1 0
+github.com/calvarado2004/bookings/internal/render/render.go:82.29,85.17 3 1
+github.com/calvarado2004/bookings/internal/render/render.go:88.3,89.17 2 1
+github.com/calvarado2004/bookings/internal/render/render.go:92.3,92.23 1 1
+github.com/calvarado2004/bookings/internal/render/render.go:99.3,99.21 1 1
+github.com/calvarado2004/bookings/internal/render/render.go:85.17,87.4 1 0
+github.com/calvarado2004/bookings/internal/render/render.go:89.17,91.4 1 0
+github.com/calvarado2004/bookings/internal/render/render.go:92.23,95.18 2 1
+github.com/calvarado2004/bookings/internal/render/render.go:95.18,97.5 1 0
