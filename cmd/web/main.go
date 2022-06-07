@@ -10,6 +10,7 @@ import (
 
 	"github.com/alexedwards/scs/v2"
 	"github.com/calvarado2004/bookings/internal/config"
+	"github.com/calvarado2004/bookings/internal/driver"
 	"github.com/calvarado2004/bookings/internal/handlers"
 	"github.com/calvarado2004/bookings/internal/helpers"
 	"github.com/calvarado2004/bookings/internal/models"
@@ -25,10 +26,11 @@ var errorLog *log.Logger
 
 func main() {
 
-	err := run()
+	db, err := run()
 	if err != nil {
 		log.Fatal(err)
 	}
+	defer db.SQL.Close()
 
 	fmt.Println(fmt.Sprintf("Starting application on port %s", portNumber))
 
@@ -42,10 +44,13 @@ func main() {
 
 }
 
-func run() error {
+func run() (*driver.DB, error) {
 
 	//what we are going to put in the session
 	gob.Register(models.Reservation{})
+	gob.Register(models.User{})
+	gob.Register(models.Room{})
+	gob.Register(models.Restriction{})
 
 	app.InProduction = false
 
@@ -63,21 +68,33 @@ func run() error {
 
 	app.Session = session
 
+	//connect to database
+
+	log.Println("Connecting to database...")
+
+	db, err := driver.ConnectSQL("host=localhost port=5432 dbname=postgres user=postgres password=")
+
+	if err != nil {
+		log.Fatal("cannot connect to database! Dying...")
+	}
+
+	log.Println("connected to database")
+
 	//get the template cache from the app config
 	tc, err := render.CreateTemplateCache()
 	if err != nil {
 		log.Fatal("cannot create template cache")
-		return err
+		return nil, err
 	}
 
 	app.TemplateCache = tc
 	app.UseCache = false
 
-	repo := handlers.NewRepo(&app)
+	repo := handlers.NewRepo(&app, db)
 
 	handlers.NewHandlers(repo)
-	render.NewTemplates(&app)
+	render.NewRenderer(&app)
 	helpers.NewHelpers(&app)
 
-	return nil
+	return db, nil
 }

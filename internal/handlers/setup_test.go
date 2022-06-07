@@ -12,6 +12,7 @@ import (
 
 	"github.com/alexedwards/scs/v2"
 	"github.com/calvarado2004/bookings/internal/config"
+	"github.com/calvarado2004/bookings/internal/driver"
 	"github.com/calvarado2004/bookings/internal/models"
 	"github.com/calvarado2004/bookings/internal/render"
 	"github.com/go-chi/chi/v5"
@@ -50,11 +51,17 @@ func getRoutes() http.Handler {
 		log.Fatal("cannot create template cache")
 	}
 
+	db, err := driver.ConnectSQL("host=localhost port=5432 dbname=postgres user=postgres password=")
+
+	if err != nil {
+		log.Fatal("cannot connect to database! Dying...")
+	}
+
 	app.TemplateCache = tc
 	app.UseCache = true
-	repo := NewRepo(&app)
+	repo := NewRepo(&app, db)
 	NewHandlers(repo)
-	render.NewTemplates(&app)
+	render.NewRenderer(&app)
 
 	mux := chi.NewRouter()
 
