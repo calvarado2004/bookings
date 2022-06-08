@@ -51,7 +51,13 @@ func getRoutes() http.Handler {
 		log.Fatal("cannot create template cache")
 	}
 
-	db, err := driver.ConnectSQL("host=localhost port=5432 dbname=postgres user=postgres password=")
+	dbServer := os.Getenv("DB_SERVER")
+	dbPort := os.Getenv("DB_PORT")
+	dbName := os.Getenv("DB_NAME")
+	dbUser := os.Getenv("DB_USER")
+	dbPassword := os.Getenv("DB_PASSWORD")
+
+	db, err := driver.ConnectSQL(fmt.Sprintf("host=%s port=%s dbname=%s user=%s password=%s", dbServer, dbPort, dbName, dbUser, dbPassword))
 
 	if err != nil {
 		log.Fatal("cannot connect to database! Dying...")
