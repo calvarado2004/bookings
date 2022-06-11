@@ -16,20 +16,6 @@ SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
---
--- Name: dblink; Type: EXTENSION; Schema: -; Owner: -
---
-
-CREATE EXTENSION IF NOT EXISTS dblink WITH SCHEMA public;
-
-
---
--- Name: EXTENSION dblink; Type: COMMENT; Schema: -; Owner: 
---
-
-COMMENT ON EXTENSION dblink IS 'connect to other PostgreSQL databases from within a database';
-
-
 SET default_tablespace = '';
 
 SET default_table_access_method = heap;
@@ -120,7 +106,7 @@ CREATE TABLE public.room_restrictions (
     id integer NOT NULL,
     start_date date NOT NULL,
     end_date date NOT NULL,
-    room_id integer NOT NULL,
+    room_id integer,
     reservation_id integer NOT NULL,
     restriction_id integer NOT NULL,
     created_at timestamp without time zone NOT NULL,
