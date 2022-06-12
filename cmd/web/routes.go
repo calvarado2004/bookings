@@ -42,6 +42,7 @@ func bookingsRoutes() http.Handler {
 	r.Get("/reservation", handlers.Repo.Reservation)
 	r.Post("/reservation", handlers.Repo.PostReservation)
 	r.Get("/reservation-summary", handlers.Repo.ReservationSummary)
+	r.Get("/choose-room/{id}", handlers.Repo.ChooseRoom)
 
 	r.Get("/contact", handlers.Repo.Contact)
 	r.Get("/availability", handlers.Repo.Availability)
