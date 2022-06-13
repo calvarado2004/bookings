@@ -39,10 +39,12 @@ func bookingsRoutes() http.Handler {
 	r.Get("/generals-quarters", handlers.Repo.Generals)
 	r.Get("/majors-suite", handlers.Repo.Majors)
 	r.Get("/specials", handlers.Repo.Specials)
+
 	r.Get("/reservation", handlers.Repo.Reservation)
 	r.Post("/reservation", handlers.Repo.PostReservation)
 	r.Get("/reservation-summary", handlers.Repo.ReservationSummary)
 	r.Get("/choose-room/{id}", handlers.Repo.ChooseRoom)
+	r.Get("/book-room", handlers.Repo.BookRoom)
 
 	r.Get("/contact", handlers.Repo.Contact)
 	r.Get("/availability", handlers.Repo.Availability)
