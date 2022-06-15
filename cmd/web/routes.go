@@ -23,6 +23,7 @@ func routes(app *config.AppConfig) http.Handler {
 	mux.Use(SessionLoad)
 
 	mux.Get("/bookings", handlers.Repo.Home)
+	mux.Get("/bookings/", handlers.Repo.Home)
 	mux.Get("/bookings/about", handlers.Repo.About)
 	mux.Get("/bookings/generals-quarters", handlers.Repo.Generals)
 	mux.Get("/bookings/majors-suite", handlers.Repo.Majors)
