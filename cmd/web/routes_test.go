@@ -19,4 +19,5 @@ func TestRoutes(t *testing.T) {
 	default:
 		t.Logf(fmt.Sprintf("type is no the expected but it is %T", mux))
 	}
+
 }
