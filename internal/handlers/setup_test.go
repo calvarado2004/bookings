@@ -8,11 +8,11 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
+	"testing"
 	"time"
 
 	"github.com/alexedwards/scs/v2"
 	"github.com/calvarado2004/bookings/internal/config"
-	"github.com/calvarado2004/bookings/internal/driver"
 	"github.com/calvarado2004/bookings/internal/models"
 	"github.com/calvarado2004/bookings/internal/render"
 	"github.com/go-chi/chi/v5"
@@ -25,7 +25,8 @@ var session *scs.SessionManager
 var pathToTemplates = "./../../templates"
 var functions = template.FuncMap{}
 
-func getRoutes() http.Handler {
+func TestMain(m *testing.M) {
+
 	//what we are going to put in the session
 	gob.Register(models.Reservation{})
 
@@ -51,23 +52,17 @@ func getRoutes() http.Handler {
 		log.Fatal("cannot create template cache")
 	}
 
-	dbServer := os.Getenv("DB_SERVER")
-	dbPort := os.Getenv("DB_PORT")
-	dbName := os.Getenv("DB_NAME")
-	dbUser := os.Getenv("DB_USER")
-	dbPassword := os.Getenv("DB_PASSWORD")
-
-	db, err := driver.ConnectSQL(fmt.Sprintf("host=%s port=%s dbname=%s user=%s password=%s", dbServer, dbPort, dbName, dbUser, dbPassword))
-
-	if err != nil {
-		log.Fatal("cannot connect to database! Dying...")
-	}
-
 	app.TemplateCache = tc
 	app.UseCache = true
-	repo := NewRepo(&app, db)
+	repo := NewTestRepo(&app)
 	NewHandlers(repo)
 	render.NewRenderer(&app)
+
+	os.Exit(m.Run())
+
+}
+
+func getRoutes() http.Handler {
 
 	mux := chi.NewRouter()
 
@@ -75,24 +70,23 @@ func getRoutes() http.Handler {
 	//mux.Use(NoSurf)
 	mux.Use(SessionLoad)
 
-	mux.Get("/", Repo.Home)
-	mux.Get("/about", Repo.About)
-	mux.Get("/generals-quarters", Repo.Generals)
-	mux.Get("/majors-suite", Repo.Majors)
-	mux.Get("/specials", Repo.Specials)
-	mux.Get("/reservation", Repo.Reservation)
-	mux.Post("/reservation", Repo.PostReservation)
-	mux.Get("/reservation-summary", Repo.ReservationSummary)
+	mux.Get("/bookings", Repo.Home)
+	mux.Get("/bookings/about", Repo.About)
+	mux.Get("/bookings/generals-quarters", Repo.Generals)
+	mux.Get("/bookings/majors-suite", Repo.Majors)
+	mux.Get("/bookings/specials", Repo.Specials)
+	mux.Get("/bookings/reservation", Repo.Reservation)
+	mux.Post("/bookings/reservation", Repo.PostReservation)
+	mux.Get("/bookings/reservation-summary", Repo.ReservationSummary)
 
-	mux.Get("/contact", Repo.Contact)
-	mux.Get("/availability", Repo.Availability)
-	mux.Post("/availability", Repo.PostAvailability)
-	mux.Post("/availability-json", Repo.AvailabilityJSON)
+	mux.Get("/bookings/contact", Repo.Contact)
+	mux.Get("/bookings/availability", Repo.Availability)
+	mux.Post("/bookings/availability", Repo.PostAvailability)
+	mux.Post("/bookings/availability-json", Repo.AvailabilityJSON)
 
 	fileServer := http.FileServer(http.Dir("./static/"))
 
-	mux.Handle("/static/*", http.StripPrefix("/static", fileServer))
-
+	mux.Handle("/bookings/static/*", http.StripPrefix("/bookings/static", fileServer))
 	return mux
 
 	//return nil
@@ -104,7 +98,7 @@ func NoSurf(next http.Handler) http.Handler {
 
 	csrfHandler.SetBaseCookie(http.Cookie{
 		HttpOnly: true,
-		Path:     "/",
+		Path:     "/bookings",
 		Secure:   app.InProduction,
 		SameSite: http.SameSiteLaxMode,
 	})
