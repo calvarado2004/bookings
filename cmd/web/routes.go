@@ -22,34 +22,26 @@ func routes(app *config.AppConfig) http.Handler {
 	mux.Use(NoSurf)
 	mux.Use(SessionLoad)
 
-	mux.Mount("/bookings", bookingsRoutes())
+	mux.Get("/bookings", handlers.Repo.Home)
+	mux.Get("/bookings/about", handlers.Repo.About)
+	mux.Get("/bookings/generals-quarters", handlers.Repo.Generals)
+	mux.Get("/bookings/majors-suite", handlers.Repo.Majors)
+	mux.Get("/bookings/specials", handlers.Repo.Specials)
+
+	mux.Get("/bookings/reservation", handlers.Repo.Reservation)
+	mux.Post("/bookings/reservation", handlers.Repo.PostReservation)
+	mux.Get("/bookings/reservation-summary", handlers.Repo.ReservationSummary)
+	mux.Get("/bookings/choose-room/{id}", handlers.Repo.ChooseRoom)
+	mux.Get("/bookings/book-room", handlers.Repo.BookRoom)
+
+	mux.Get("/bookings/contact", handlers.Repo.Contact)
+	mux.Get("/bookings/availability", handlers.Repo.Availability)
+	mux.Post("/bookings/availability", handlers.Repo.PostAvailability)
+	mux.Post("/bookings/availability-json", handlers.Repo.AvailabilityJSON)
 
 	fileServer := http.FileServer(http.Dir("./static/"))
 
 	mux.Handle("/bookings/static/*", http.StripPrefix("/bookings/static", fileServer))
 
 	return mux
-}
-
-func bookingsRoutes() http.Handler {
-
-	r := chi.NewRouter()
-	r.Get("/", handlers.Repo.Home)
-	r.Get("/about", handlers.Repo.About)
-	r.Get("/generals-quarters", handlers.Repo.Generals)
-	r.Get("/majors-suite", handlers.Repo.Majors)
-	r.Get("/specials", handlers.Repo.Specials)
-
-	r.Get("/reservation", handlers.Repo.Reservation)
-	r.Post("/reservation", handlers.Repo.PostReservation)
-	r.Get("/reservation-summary", handlers.Repo.ReservationSummary)
-	r.Get("/choose-room/{id}", handlers.Repo.ChooseRoom)
-	r.Get("/book-room", handlers.Repo.BookRoom)
-
-	r.Get("/contact", handlers.Repo.Contact)
-	r.Get("/availability", handlers.Repo.Availability)
-	r.Post("/availability", handlers.Repo.PostAvailability)
-	r.Post("/availability-json", handlers.Repo.AvailabilityJSON)
-
-	return r
 }
