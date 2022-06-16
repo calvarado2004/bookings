@@ -55,7 +55,7 @@ func TestRenderTemplate(t *testing.T) {
 		t.Error(err)
 	}
 
-	var ww myWrite
+	var ww myWriter
 
 	err = Template(&ww, r, "home.page.html", &models.TemplateData{})
 	if err != nil {

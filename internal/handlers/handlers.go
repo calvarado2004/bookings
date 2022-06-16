@@ -163,7 +163,7 @@ func (m *Repository) PostReservation(w http.ResponseWriter, r *http.Request) {
 	if !form.Valid() {
 		data := make(map[string]interface{})
 		data["reservation"] = reservation
-		http.Error(w, "my own error message", http.StatusSeeOther)
+		http.Error(w, "my own error message", http.StatusTemporaryRedirect)
 		render.Template(w, r, "reservation.page.html", &models.TemplateData{
 			Form: form,
 			Data: data,
@@ -249,7 +249,7 @@ func (m *Repository) PostAvailability(w http.ResponseWriter, r *http.Request) {
 
 		m.App.Session.Put(r.Context(), "error", "No availability")
 
-		http.Redirect(w, r, "/bookings/availability", http.StatusSeeOther)
+		http.Redirect(w, r, "/bookings/availability", http.StatusTemporaryRedirect)
 		return
 	}
 

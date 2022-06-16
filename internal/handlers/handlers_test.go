@@ -244,8 +244,8 @@ func TestRepository_PostReservation(t *testing.T) {
 
 	handler.ServeHTTP(rr, req)
 
-	if rr.Code != http.StatusSeeOther {
-		t.Errorf("PostReservation handler returned wrong response code for invalid data: got %d, wanted %d", rr.Code, http.StatusSeeOther)
+	if rr.Code != http.StatusTemporaryRedirect {
+		t.Errorf("PostReservation handler returned wrong response code for invalid data: got %d, wanted %d", rr.Code, http.StatusTemporaryRedirect)
 	}
 
 	// test for failure to insert reservation into database
@@ -267,7 +267,7 @@ func TestRepository_PostReservation(t *testing.T) {
 
 	handler.ServeHTTP(rr, req)
 
-	if rr.Code == http.StatusTemporaryRedirect {
+	if rr.Code != http.StatusTemporaryRedirect {
 		t.Errorf("PostReservation handler failed when trying to fail inserting reservation: got %d, wanted %d", rr.Code, http.StatusTemporaryRedirect)
 	}
 
@@ -278,7 +278,7 @@ func TestRepository_PostReservation(t *testing.T) {
 	reqBody = fmt.Sprintf("%s&%s", reqBody, "last_name=Smith")
 	reqBody = fmt.Sprintf("%s&%s", reqBody, "email=john@smith.com")
 	reqBody = fmt.Sprintf("%s&%s", reqBody, "phone=123456789")
-	reqBody = fmt.Sprintf("%s&%s", reqBody, "room_id=1000")
+	reqBody = fmt.Sprintf("%s&%s", reqBody, "room_id=2")
 
 	req, _ = http.NewRequest("POST", "/bookings/reservation", strings.NewReader(reqBody))
 	ctx = getCtx(req)
@@ -334,8 +334,8 @@ func TestRepository_PostAvailability(t *testing.T) {
 	handler.ServeHTTP(rr, req)
 
 	// since we have no rooms available, we expect to get status http.StatusSeeOther
-	if rr.Code != http.StatusSeeOther {
-		t.Errorf("Post availability when no rooms available gave wrong status code: got %d, wanted %d", rr.Code, http.StatusSeeOther)
+	if rr.Code != http.StatusTemporaryRedirect {
+		t.Errorf("Post availability when no rooms available gave wrong status code: got %d, wanted %d", rr.Code, http.StatusTemporaryRedirect)
 	}
 
 	/*****************************************
