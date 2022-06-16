@@ -354,8 +354,9 @@ func (m *Repository) ReservationSummary(w http.ResponseWriter, r *http.Request) 
 // ChooseRoom displays list of available rooms
 func (m *Repository) ChooseRoom(w http.ResponseWriter, r *http.Request) {
 
+	//Grab the fourth element [3] of the result of split the URL by its slashes
 	exploded := strings.Split(r.RequestURI, "/")
-	roomID, err := strconv.Atoi(exploded[2])
+	roomID, err := strconv.Atoi(exploded[3])
 	if err != nil {
 		m.App.Session.Put(r.Context(), "error", "missing url parameter")
 		http.Redirect(w, r, "/bookings", http.StatusTemporaryRedirect)
