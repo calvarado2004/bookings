@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"strconv"
 	"strings"
@@ -190,6 +191,27 @@ func (m *Repository) PostReservation(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/bookings", http.StatusTemporaryRedirect)
 		return
 	}
+
+	htmlMessage := fmt.Sprintf(`
+
+	<strong>Reservation Confirmation</strong>
+
+	Dear %s, <br>
+	This email is your reservation confirmation from Bookings in Go.
+	Dates selected %s to %s
+	
+	`, reservation.FirstName, reservation.StartDate.Format("2006-01-02"), reservation.EndDate.Format("2006-01-02"))
+
+	//send notifications
+	msg := models.MailData{
+		To:      reservation.Email,
+		From:    "admin@bookings.com",
+		Subject: "Reservation Confirmation from Bookings",
+		Content: htmlMessage,
+	}
+
+	//sends the message to the channel
+	m.App.MailChan <- msg
 
 	m.App.Session.Put(r.Context(), "reservation", reservation)
 

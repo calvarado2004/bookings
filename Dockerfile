@@ -1,7 +1,7 @@
 FROM docker.io/bitnami/golang:1.18.1 AS builder
 ADD ./ /app
 WORKDIR /app
-RUN go mod init github.com/calvarado2004/bookings && go mod tidy && go get github.com/alexedwards/scs/v2 && go get github.com/go-chi/chi/v5 && go get github.com/justinas/nosurf && go get github.com/asaskevich/govalidator 
+RUN go mod init github.com/calvarado2004/bookings && go mod tidy && go get github.com/alexedwards/scs/v2 && go get github.com/go-chi/chi/v5 && go get github.com/justinas/nosurf && go get github.com/asaskevich/govalidator && go get github.com/xhit/go-simple-mail/v2 
 RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o bookings cmd/web/*.go
 RUN wget https://github.com/gobuffalo/pop/releases/download/v6.0.4/pop_6.0.4_linux_amd64.tar.gz && tar -xvzf pop_6.0.4_linux_amd64.tar.gz
 
