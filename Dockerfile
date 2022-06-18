@@ -13,6 +13,7 @@ WORKDIR $APP_HOME
 COPY ./templates templates/
 COPY ./migrations migrations/
 COPY ./static static/
+COPY ./email-templates email-templates/
 COPY --chown=0:0 --from=builder /app/database.yml ./
 COPY --chown=0:0 --from=builder /app/soda /usr/local/bin/soda
 COPY --chown=0:0 --from=builder /app/bookings ./
