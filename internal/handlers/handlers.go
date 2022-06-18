@@ -143,6 +143,13 @@ func (m *Repository) PostReservation(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	room, err := m.DB.GetRoomByID(roomID)
+	if err != nil {
+		m.App.Session.Put(r.Context(), "error", "invalid data!")
+		http.Redirect(w, r, "/bookings", http.StatusTemporaryRedirect)
+		return
+	}
+
 	reservation := models.Reservation{
 		FirstName: r.Form.Get("first_name"),
 		LastName:  r.Form.Get("last_name"),
@@ -151,6 +158,7 @@ func (m *Repository) PostReservation(w http.ResponseWriter, r *http.Request) {
 		StartDate: startDate,
 		EndDate:   endDate,
 		RoomID:    roomID,
+		Room:      room,
 	}
 
 	form := forms.New(r.PostForm)
@@ -204,10 +212,11 @@ func (m *Repository) PostReservation(w http.ResponseWriter, r *http.Request) {
 
 	//send notifications
 	msg := models.MailData{
-		To:      reservation.Email,
-		From:    "admin@bookings.com",
-		Subject: "Reservation Confirmation from Bookings",
-		Content: htmlMessage,
+		To:       reservation.Email,
+		From:     "admin@bookings.com",
+		Subject:  "Reservation Confirmation from Bookings",
+		Content:  htmlMessage,
+		Template: "basic.html",
 	}
 
 	//sends the message to the channel
