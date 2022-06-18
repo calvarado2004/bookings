@@ -7,7 +7,9 @@
         <div class="col">
             <h1> Login </h1>
 
-            <form>
+            <form method="post" action="/bookings/user/login" novalidate>
+                <input type="hidden" name="csrf_token" value="{{.CSRFToken}}">
+
                 <div class="form-group mt-9">
 
                     <label for="email">Email</label>
@@ -28,11 +30,11 @@
     
                 </div>
 
+                <input type="submit" class="btn btn-primary" value="Submit">
+
             </form>
 
             <hr>
-
-            <input type="submit" class="btn btn-primary" value="Submit">
 
         </div>
     </div>
