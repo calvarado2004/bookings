@@ -95,9 +95,17 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/bookings/contact">Contact</a>
                     </li>
-                    <li class="nav-item">
                         {{if eq .IsAuthenticated 1}}
-                            <a class="nav-link" href="/bookings/user/logout">Logout</a>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    Admin
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <li><a class="dropdown-item" href="/bookings-admin/dashboard">Admin dashboard</a></li>
+                                    <li><a class="dropdown-item" href="/bookings/user/logout">Logout</a></li>
+                                </ul>
+                            </li>
                         {{else}}
                             <a class="nav-link" href="/bookings/user/login">Login</a>
                         {{end}}
