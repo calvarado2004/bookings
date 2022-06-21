@@ -12,6 +12,7 @@ import (
 	"github.com/calvarado2004/bookings/internal/config"
 	"github.com/calvarado2004/bookings/internal/driver"
 	"github.com/calvarado2004/bookings/internal/forms"
+	"github.com/calvarado2004/bookings/internal/helpers"
 	"github.com/calvarado2004/bookings/internal/models"
 	"github.com/calvarado2004/bookings/internal/render"
 	"github.com/calvarado2004/bookings/internal/repository"
@@ -502,7 +503,20 @@ func (m *Repository) AdminNewReservations(w http.ResponseWriter, r *http.Request
 }
 
 func (m *Repository) AdminAllReservations(w http.ResponseWriter, r *http.Request) {
-	render.Template(w, r, "admin-all-reservations.page.html", &models.TemplateData{})
+
+	reservations, err := m.DB.AllReservations()
+	if err != nil {
+		helpers.ServerError(w, err)
+		return
+	}
+
+	data := make(map[string]interface{})
+
+	data["reservations"] = reservations
+
+	render.Template(w, r, "admin-all-reservations.page.html", &models.TemplateData{
+		Data: data,
+	})
 }
 
 func (m *Repository) AdminCalendarReservations(w http.ResponseWriter, r *http.Request) {

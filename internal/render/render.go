@@ -7,6 +7,7 @@ import (
 	"html/template"
 	"net/http"
 	"path/filepath"
+	"time"
 
 	"github.com/calvarado2004/bookings/internal/config"
 	"github.com/calvarado2004/bookings/internal/models"
@@ -70,7 +71,15 @@ func Template(w http.ResponseWriter, r *http.Request, tmpl string, td *models.Te
 
 }
 
-var functions = template.FuncMap{}
+var functions = template.FuncMap{
+	"humanDate": HumanDate,
+}
+
+//HumanDate returns time in yyyy-mm-dd format
+func HumanDate(t time.Time) string {
+
+	return t.Format("2006-01-02")
+}
 
 // Creates a template cache as a map
 func CreateTemplateCache() (map[string]*template.Template, error) {
