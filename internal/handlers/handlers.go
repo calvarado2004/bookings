@@ -498,10 +498,7 @@ func (m *Repository) AdminDashboard(w http.ResponseWriter, r *http.Request) {
 	render.Template(w, r, "admin-dashboard.page.html", &models.TemplateData{})
 }
 
-func (m *Repository) AdminNewReservations(w http.ResponseWriter, r *http.Request) {
-	render.Template(w, r, "admin-new-reservations.page.html", &models.TemplateData{})
-}
-
+//AdminAllReservations gets all reservations
 func (m *Repository) AdminAllReservations(w http.ResponseWriter, r *http.Request) {
 
 	reservations, err := m.DB.AllReservations()
@@ -515,6 +512,26 @@ func (m *Repository) AdminAllReservations(w http.ResponseWriter, r *http.Request
 	data["reservations"] = reservations
 
 	render.Template(w, r, "admin-all-reservations.page.html", &models.TemplateData{
+		Data: data,
+	})
+}
+
+//AdminAllNewReservations gets all the new reservations
+func (m *Repository) AdminAllNewReservations(w http.ResponseWriter, r *http.Request) {
+
+	newreservations, err := m.DB.AllNewReservations()
+	if err != nil {
+		helpers.ServerError(w, err)
+		return
+	}
+
+	//log.Println(newreservations)
+
+	data := make(map[string]interface{})
+
+	data["newreservations"] = newreservations
+
+	render.Template(w, r, "admin-new-reservations.page.html", &models.TemplateData{
 		Data: data,
 	})
 }
