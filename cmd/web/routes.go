@@ -22,36 +22,43 @@ func routes(app *config.AppConfig) http.Handler {
 	mux.Use(NoSurf)
 	mux.Use(SessionLoad)
 
-	mux.Get("/bookings", handlers.Repo.Home)
-	mux.Get("/bookings/", handlers.Repo.Home)
-	mux.Get("/bookings/about", handlers.Repo.About)
-	mux.Get("/bookings/generals-quarters", handlers.Repo.Generals)
-	mux.Get("/bookings/majors-suite", handlers.Repo.Majors)
-	mux.Get("/bookings/specials", handlers.Repo.Specials)
+	mux.Route("/bookings", func(mux chi.Router) {
 
-	mux.Get("/bookings/reservation", handlers.Repo.Reservation)
-	mux.Post("/bookings/reservation", handlers.Repo.PostReservation)
-	mux.Get("/bookings/reservation-summary", handlers.Repo.ReservationSummary)
-	mux.Get("/bookings/choose-room/{id}", handlers.Repo.ChooseRoom)
-	mux.Get("/bookings/book-room", handlers.Repo.BookRoom)
+		mux.Get("/", handlers.Repo.Home)
+		mux.Get("/about", handlers.Repo.About)
+		mux.Get("/generals-quarters", handlers.Repo.Generals)
+		mux.Get("/majors-suite", handlers.Repo.Majors)
+		mux.Get("/specials", handlers.Repo.Specials)
 
-	mux.Get("/bookings/contact", handlers.Repo.Contact)
-	mux.Get("/bookings/availability", handlers.Repo.Availability)
-	mux.Post("/bookings/availability", handlers.Repo.PostAvailability)
-	mux.Post("/bookings/availability-json", handlers.Repo.AvailabilityJSON)
-	mux.Get("/bookings/user/login", handlers.Repo.Showlogin)
-	mux.Post("/bookings/user/login", handlers.Repo.PostShowlogin)
+		mux.Get("/reservation", handlers.Repo.Reservation)
+		mux.Post("/reservation", handlers.Repo.PostReservation)
+		mux.Get("/reservation-summary", handlers.Repo.ReservationSummary)
+		mux.Get("/choose-room/{id}", handlers.Repo.ChooseRoom)
+		mux.Get("/book-room", handlers.Repo.BookRoom)
 
-	mux.Get("/bookings/user/logout", handlers.Repo.Logout)
+		mux.Get("/contact", handlers.Repo.Contact)
+		mux.Get("/availability", handlers.Repo.Availability)
+		mux.Post("/availability", handlers.Repo.PostAvailability)
+		mux.Post("/availability-json", handlers.Repo.AvailabilityJSON)
+		mux.Get("/user/login", handlers.Repo.Showlogin)
+		mux.Post("/user/login", handlers.Repo.PostShowlogin)
 
-	fileServer := http.FileServer(http.Dir("./static/"))
+		mux.Get("/user/logout", handlers.Repo.Logout)
 
-	mux.Handle("/bookings/static/*", http.StripPrefix("/bookings/static", fileServer))
+		fileServer := http.FileServer(http.Dir("./static/"))
+
+		mux.Handle("/static/*", http.StripPrefix("/bookings/static", fileServer))
+
+	})
 
 	mux.Route("/bookings-admin", func(mux chi.Router) {
 		mux.Use(Auth)
 
-		mux.Get("/dashboard", handlers.Repo.AdminDashboard)
+		mux.Get("/reservations", handlers.Repo.AdminDashboard)
+		mux.Get("/reservations/new", handlers.Repo.AdminNewReservations)
+		mux.Get("/reservations/all", handlers.Repo.AdminAllReservations)
+		mux.Get("/reservations/calendar", handlers.Repo.AdminCalendarReservations)
+
 	})
 
 	return mux

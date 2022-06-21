@@ -27,7 +27,7 @@
         <!-- partial:partials/_navbar.html -->
         <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
             <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-                <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
+                <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-bs-toggle="minimize">
                     <span class="ti-view-list"></span>
                 </button>
             </div>
@@ -52,13 +52,13 @@
             <nav class="sidebar sidebar-offcanvas" id="sidebar">
                 <ul class="nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="/bookings-admin/dashboard">
+                        <a class="nav-link" href="/bookings-admin/reservations">
                             <i class="ti-shield menu-icon"></i>
                             <span class="menu-title">Dashboard</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false"
+                        <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false"
                            aria-controls="ui-basic">
                             <i class="ti-palette menu-icon"></i>
                             <span class="menu-title">Reservations</span>
@@ -66,15 +66,15 @@
                         </a>
                         <div class="collapse" id="ui-basic">
                             <ul class="nav flex-column sub-menu">
-                                <li class="nav-item"><a class="nav-link" href="/bookings-admin/reservations-new">New
+                                <li class="nav-item"><a class="nav-link" href="/bookings-admin/reservations/new">New
                                         Reservations</a></li>
-                                <li class="nav-item"><a class="nav-link" href="/bookings-admin/reservations-all">All
+                                <li class="nav-item"><a class="nav-link" href="/bookings-admin/reservations/all">All
                                         Reservations</a></li>
                             </ul>
                         </div>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/bookings-admin/reservation-calendar">
+                        <a class="nav-link" href="/bookings-admin/reservations/calendar">
                             <i class="ti-layout-list-post menu-icon"></i>
                             <span class="menu-title">Reservation Calendar</span>
                         </a>
