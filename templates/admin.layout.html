@@ -10,6 +10,8 @@
         <!-- plugins:css -->
         <link rel="stylesheet" href="/bookings/static/admin/vendors/ti-icons/css/themify-icons.css">
         <link rel="stylesheet" href="/bookings/static/admin/vendors/base/vendor.bundle.base.css">
+        <link rel="stylesheet" type="text/css" href="https://unpkg.com/notie/dist/notie.min.css">
+
         <!-- endinject -->
         <!-- plugin css for this page -->
         <!-- End plugin css for this page -->
@@ -24,6 +26,11 @@
 
             label {
                 font-weight: bold;
+            }
+
+            .notie-container {
+
+                z-index: 50000;
             }
         </style>
 
@@ -143,6 +150,47 @@
     <!-- Custom js for this page-->
     <script src="/bookings/static/admin/js/dashboard.js"></script>
     <!-- End custom js for this page-->
+    <script src="https://unpkg.com/notie"></script>
+
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script src="/bookings/static/js/app.js"></script>
+
+    <script>
+        
+        let attention = Prompt();
+
+        function notifyModal(title, text, icon, confirmationButtonText) {
+            Swal.fire({
+                title: title,
+                html: text,
+                icon: icon,
+                confirmButtonText: confirmationButtonText
+            })
+        };
+
+        function notify(msg, msgType) {
+            notie.alert({
+                type: msgType,
+                text: msg,
+                position: "top",
+            })
+
+        };
+
+        {{with .Error}}
+            notify("{{.}}","error")
+        {{end}}
+
+        {{with .Flash}}
+            notify("{{.}}","success")
+        {{end}}
+
+        {{with .Warning}}
+            notify("{{.}}","warning")
+        {{end}}
+
+    </script>
 
     {{block "js" . }}
 

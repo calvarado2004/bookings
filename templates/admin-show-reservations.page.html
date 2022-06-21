@@ -66,6 +66,7 @@
             <input type="submit" class="btn btn-primary" value="Save">
 
             <a href="/bookings-admin/reservations/{{$src}}" class="btn btn-warning">Cancel</a>
+            <a href="#!" class="btn btn-info" onclick="processRes({{$res.ID}})" >Mark as Processed</a>
 
         </form>
 
@@ -84,4 +85,25 @@
     })
 
 </script>
+
+{{$src := index .StringMap "src" }}
+
+<script>
+
+    function processRes(id) {
+
+        attention.custom({
+            icon: 'warning',
+            msg: 'Are you sure?',
+            callback: function(result) {
+                if (result !== false) {
+                    window.location.href = "/bookings-admin/reservations/process-reservation/{{$src}}/" + id;
+                }
+            },
+        })
+
+    }
+
+</script>
+
 {{end}}

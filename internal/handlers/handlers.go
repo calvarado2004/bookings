@@ -17,6 +17,7 @@ import (
 	"github.com/calvarado2004/bookings/internal/render"
 	"github.com/calvarado2004/bookings/internal/repository"
 	"github.com/calvarado2004/bookings/internal/repository/dbrepo"
+	"github.com/go-chi/chi/v5"
 )
 
 var Repo *Repository
@@ -620,6 +621,29 @@ func (m *Repository) AdminPostShowReservations(w http.ResponseWriter, r *http.Re
 	}
 
 	m.App.Session.Put(r.Context(), "flash", "Changes saved")
+
+	http.Redirect(w, r, fmt.Sprintf("/bookings-admin/reservations/%s", src), http.StatusSeeOther)
+
+}
+
+//AdminProcessReservations marks a reservation as processed
+func (m *Repository) AdminProcessReservations(w http.ResponseWriter, r *http.Request) {
+
+	id, err := strconv.Atoi(chi.URLParam(r, "id"))
+	if err != nil {
+		helpers.ServerError(w, err)
+		return
+	}
+
+	src := chi.URLParam(r, "src")
+
+	err = m.DB.UpdateProcessedForReservation(id, 1)
+	if err != nil {
+		helpers.ServerError(w, err)
+		return
+	}
+
+	m.App.Session.Put(r.Context(), "flash", "Reservation marked as processed")
 
 	http.Redirect(w, r, fmt.Sprintf("/bookings-admin/reservations/%s", src), http.StatusSeeOther)
 
