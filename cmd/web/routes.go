@@ -52,11 +52,12 @@ func routes(app *config.AppConfig) http.Handler {
 	})
 
 	mux.Route("/bookings-admin", func(mux chi.Router) {
-		mux.Use(Auth)
+		//mux.Use(Auth)
 
 		mux.Get("/reservations", handlers.Repo.AdminDashboard)
 		mux.Get("/reservations/new", handlers.Repo.AdminAllNewReservations)
 		mux.Get("/reservations/all", handlers.Repo.AdminAllReservations)
+		mux.Get("/reservations/{src}/{id}", handlers.Repo.AdminShowReservations)
 		mux.Get("/reservations/calendar", handlers.Repo.AdminCalendarReservations)
 
 	})
