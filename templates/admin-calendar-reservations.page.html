@@ -1,22 +1,60 @@
 {{template "admin" .}}
 
 {{define "page-title"}}
-    Reservations Calendar
+Reservations Calendar
 {{end}}
 
 {{define "content"}}
-    <div class="col-md-12">
-        <div class="text-center">
-            <h3>{{index .StringMap "this_month"}} {{index .StringMap "this_month_year"}}</h3>
+{{$now := index .Data "now"}}
+{{$rooms := index .Data "rooms"}}
 
-            <div class="float-start">
-                <a class="btn btn-sm btn-outline-secondary" href="/bookings-admin/reservations/calendar?y={{index .StringMap "last_month_year"}}&m={{index .StringMap "last_month"}}">&lt;&lt</a>
-            </div>
-            <div class="float-end">
-                <a class="btn btn-sm btn-outline-secondary" href="/bookings-admin/reservations/calendar?y={{index .StringMap "next_month_year"}}&m={{index .StringMap "next_month"}}">&gt;&gt</a>
-            </div>
-            <div class="clearfix"></div>
+{{$dim := index .IntMap "days_in_month"}}
+
+<div class="col-md-12">
+    <div class="text-center">
+        <h3>{{formatDate $now "January"}} {{formatDate $now "2006"}}</h3>
+
+        <div class="float-start">
+            <a class="btn btn-sm btn-outline-secondary" href="/bookings-admin/reservations/calendar?y={{index .StringMap "last_month_year"}}&m={{index .StringMap "last_month"}}">&lt;&lt</a>
 
         </div>
+        <div class="float-end">
+            <a class="btn btn-sm btn-outline-secondary" href="/bookings-admin/reservations/calendar?y={{index .StringMap "next_month_year"}}&m={{index .StringMap "next_month"}}">&gt;&gt</a>
+        </div>
+        <div class="clearfix"></div>
+
+        {{range $rooms}}
+
+            {{$roomId := .ID}}
+
+            <h4 class="mt-4">{{.RoomName}}</h4>
+
+            <div class="table-responsive-sm">
+                <table class="table table-bordered table-sm">
+
+                    <tr class="table-secondary">
+
+                        {{range $index := iterate $dim}}
+                        <td class="text-center">
+                            {{add $index 1}}
+                        </td>
+                        {{end}}
+                    </tr>
+
+                    <tr>
+                        {{range $index := iterate $dim}}
+                        <td clas="text-center">
+                            <input type="checkbox">
+                        </td>
+                        {{end}}
+
+                    </tr>
+
+                </table>
+
+        </div>
+
+        {{end}}
     </div>
+</div>
 {{end}}

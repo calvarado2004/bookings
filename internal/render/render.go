@@ -71,14 +71,42 @@ func Template(w http.ResponseWriter, r *http.Request, tmpl string, td *models.Te
 
 }
 
+//Map of functions available to the templates
 var functions = template.FuncMap{
-	"humanDate": HumanDate,
+	"humanDate":  HumanDate,
+	"formatDate": FormatDate,
+	"iterate":    Iterate,
+	"add":        Add,
 }
 
 //HumanDate returns time in yyyy-mm-dd format
 func HumanDate(t time.Time) string {
 
 	return t.Format("2006-01-02")
+}
+
+//FormatDate helps to format numeric date into string date
+func FormatDate(t time.Time, f string) string {
+
+	return t.Format(f)
+}
+
+//Add add two numbers
+func Add(a, b int) int {
+
+	return a + b
+}
+
+//Iterate performs a for loop
+func Iterate(count int) []int {
+	var i int
+	var items []int
+
+	for i = 0; i < count; i++ {
+		items = append(items, i)
+	}
+
+	return items
 }
 
 // Creates a template cache as a map
