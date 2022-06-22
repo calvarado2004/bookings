@@ -54,9 +54,9 @@ func routes(app *config.AppConfig) http.Handler {
 	mux.Route("/bookings-admin", func(mux chi.Router) {
 		mux.Use(AuthPrivate)
 
-		mux.Get("/user/login", handlers.Repo.Showlogin)
-		mux.Post("/user/login", handlers.Repo.PostShowlogin)
-		mux.Get("/user/logout", handlers.Repo.Logout)
+		mux.Get("/user/login", handlers.Repo.ShowAdminlogin)
+		mux.Post("/user/login", handlers.Repo.PostShowAdminlogin)
+		mux.Get("/user/logout", handlers.Repo.AdminLogout)
 
 		mux.Get("/reservations", handlers.Repo.AdminDashboard)
 		mux.Get("/reservations/new", handlers.Repo.AdminAllNewReservations)
