@@ -44,14 +44,3 @@ func Auth(next http.Handler) http.Handler {
 		next.ServeHTTP(w, r)
 	})
 }
-
-func AuthPrivate(next http.Handler) http.Handler {
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		if !helpers.IsAuthenticated(r) {
-			session.Put(r.Context(), "error", "login first!")
-			http.Redirect(w, r, "/bookings-admin/user/login", http.StatusSeeOther)
-			return
-		}
-		next.ServeHTTP(w, r)
-	})
-}
