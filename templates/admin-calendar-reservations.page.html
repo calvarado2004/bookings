@@ -7,8 +7,10 @@ Reservations Calendar
 {{define "content"}}
 {{$now := index .Data "now"}}
 {{$rooms := index .Data "rooms"}}
-
 {{$dim := index .IntMap "days_in_month"}}
+{{$curMonth := index .StringMap "this_month"}}
+{{$curYear := index .StringMap "this_month_year"}}
+
 
 <div class="col-md-12">
     <div class="text-center">
