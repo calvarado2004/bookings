@@ -55,7 +55,7 @@ Reservations Calendar
                         <td clas="text-center">
                             {{if gt (index $reservations (printf "%s-%s-%d" $curYear $curMonth (add $index 1))) 0 }}
 
-                            <a href="/bookings-admin/reservations/cal/{{index $reservations (printf " %s-%s-%d" $curYear
+                            <a href="/bookings-admin/reservations/cal/{{index $reservations (printf "%s-%s-%d" $curYear
                                 $curMonth (add $index 1))}}">
                                 <span class="text-danger">R</span>
                             </a>
