@@ -18,14 +18,19 @@ Reservations Calendar
 
         <div class="float-start">
             <a class="btn btn-sm btn-outline-secondary" href="/bookings-admin/reservations/calendar?y={{index .StringMap "last_month_year"}}&m={{index .StringMap "last_month"}}">&lt;&lt</a>
-
+        
         </div>
         <div class="float-end">
             <a class="btn btn-sm btn-outline-secondary" href="/bookings-admin/reservations/calendar?y={{index .StringMap "next_month_year"}}&m={{index .StringMap "next_month"}}">&gt;&gt</a>
         </div>
         <div class="clearfix"></div>
 
-        {{range $rooms}}
+        <form method="post" action="/bookings-admin/reservations/calendar">
+            <input type="hidden" name="csrf_token" value="{{.CSRFToken}}">
+            <input type="hidden" name="m" value="{{index .StringMap "this_month"}}">
+            <input type="hidden" name="y" value="{{index .StringMap "this_month_year"}}">
+
+            {{range $rooms}}
 
             {{$roomID := .ID}}
             {{$blocks := index $.Data (printf "block_map_%d" .ID)}}
@@ -50,20 +55,17 @@ Reservations Calendar
                         <td clas="text-center">
                             {{if gt (index $reservations (printf "%s-%s-%d" $curYear $curMonth (add $index 1))) 0 }}
 
-                                <a href="/bookings-admin/reservations/cal/{{index $reservations (printf "%s-%s-%d" $curYear $curMonth (add $index 1))}}">
-                                    <span class="text-danger">R</span>
-                                </a>
+                            <a href="/bookings-admin/reservations/cal/{{index $reservations (printf " %s-%s-%d" $curYear
+                                $curMonth (add $index 1))}}">
+                                <span class="text-danger">R</span>
+                            </a>
                             {{ else }}
 
-                                <input 
-                                    {{if gt (index $blocks (printf "%s-%s-%d" $curYear $curMonth (add $index 1))) 0 }}
-                                        name="remove_block_{{$roomID}}_{{printf "%s-%s-%d" $curYear $curMonth (add $index 1)}}"
-                                        value="{{index $blocks (printf "%s-%s-%d" $curYear $curMonth (add $index 1))}}"
-                                        checked
-                                    {{else}}
-                                        name="add_block_{{$roomID}}_{{printf "%s-%s-%d" $curYear $curMonth (add $index 1)}}"
-                                    {{end}}
-                                        type="checkbox">
+                            <input {{if gt (index $blocks (printf "%s-%s-%d" $curYear $curMonth (add $index 1))) 0 }}
+                                name="remove_block_{{$roomID}}_{{printf "%s-%s-%d" $curYear $curMonth (add $index 1)}}"
+                                value="{{index $blocks (printf "%s-%s-%d" $curYear $curMonth (add $index 1))}}" checked
+                                {{else}} name="add_block_{{$roomID}}_{{printf "%s-%s-%d" $curYear $curMonth (add $index
+                                1)}}" {{end}} type="checkbox">
                             {{end}}
                         </td>
                         {{end}}
@@ -71,9 +73,16 @@ Reservations Calendar
 
                 </table>
 
-        </div>
+            </div>
 
-        {{end}}
+            {{end}}
+
+            <hr>
+
     </div>
+
+    <input type="submit" class="btn btn-primary" value="Save Changes">
+
+    </form>
 </div>
 {{end}}
