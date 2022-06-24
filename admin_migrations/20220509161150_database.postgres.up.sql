@@ -1,3 +1,7 @@
+CREATE TEMPORARY TABLE temp_table_name(
+   column_list
+);
+
 DO
 $do$
 BEGIN
