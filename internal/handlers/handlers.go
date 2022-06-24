@@ -679,6 +679,12 @@ func (m *Repository) AdminShowReservations(w http.ResponseWriter, r *http.Reques
 
 	stringMap["src"] = src
 
+	year := r.URL.Query().Get("y")
+	month := r.URL.Query().Get("m")
+
+	stringMap["year"] = year
+	stringMap["month"] = month
+
 	//get reservation from the database
 
 	res, err := m.DB.GetReservationByID(id)
@@ -738,9 +744,17 @@ func (m *Repository) AdminPostShowReservations(w http.ResponseWriter, r *http.Re
 		return
 	}
 
+	month := r.Form.Get("month")
+	year := r.Form.Get("year")
+
 	m.App.Session.Put(r.Context(), "flash", "Changes saved")
 
-	http.Redirect(w, r, fmt.Sprintf("/bookings-admin/reservations/%s", src), http.StatusSeeOther)
+	if year == "" {
+		http.Redirect(w, r, fmt.Sprintf("/bookings-admin/reservations/%s", src), http.StatusSeeOther)
+
+	} else {
+		http.Redirect(w, r, fmt.Sprintf("/bookings-admin/reservations/calendar?y=%s&m=%s", year, month), http.StatusSeeOther)
+	}
 
 }
 
@@ -761,9 +775,17 @@ func (m *Repository) AdminProcessReservations(w http.ResponseWriter, r *http.Req
 		return
 	}
 
+	year := r.URL.Query().Get("y")
+	month := r.URL.Query().Get("m")
+
 	m.App.Session.Put(r.Context(), "flash", "Reservation marked as processed")
 
-	http.Redirect(w, r, fmt.Sprintf("/bookings-admin/reservations/%s", src), http.StatusSeeOther)
+	if year == "" {
+		http.Redirect(w, r, fmt.Sprintf("/bookings-admin/reservations/%s", src), http.StatusSeeOther)
+
+	} else {
+		http.Redirect(w, r, fmt.Sprintf("/bookings-admin/reservations/calendar?y=%s&m=%s", year, month), http.StatusSeeOther)
+	}
 
 }
 
@@ -786,8 +808,15 @@ func (m *Repository) AdminDeleteReservations(w http.ResponseWriter, r *http.Requ
 
 	m.App.Session.Put(r.Context(), "flash", "Reservation deleted!")
 
-	http.Redirect(w, r, fmt.Sprintf("/bookings-admin/reservations/%s", src), http.StatusSeeOther)
+	year := r.URL.Query().Get("y")
+	month := r.URL.Query().Get("m")
 
+	if year == "" {
+		http.Redirect(w, r, fmt.Sprintf("/bookings-admin/reservations/%s", src), http.StatusSeeOther)
+
+	} else {
+		http.Redirect(w, r, fmt.Sprintf("/bookings-admin/reservations/calendar?y=%s&m=%s", year, month), http.StatusSeeOther)
+	}
 }
 
 func (m *Repository) AdminPostCalendar(w http.ResponseWriter, r *http.Request) {
