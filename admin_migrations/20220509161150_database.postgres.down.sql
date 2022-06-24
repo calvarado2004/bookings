@@ -1,6 +1,8 @@
-DO
-$do$
-BEGIN
+CREATE OR REPLACE PROCEDURE database_bookings_drop()
+
+LANGUAGE plpgsql AS
+
+$$ BEGIN
    IF EXISTS (SELECT FROM pg_extension WHERE extname = 'dblink') THEN
       RAISE NOTICE 'Extension dblink already exists';
    ELSE
@@ -12,5 +14,7 @@ BEGIN
                         , 'DROP DATABASE bookings');
       DROP EXTENSION dblink;
    END IF;
-END
-$do$;
+END $$;
+
+CALL database_bookings_drop();
+

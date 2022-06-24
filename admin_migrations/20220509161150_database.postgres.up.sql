@@ -1,6 +1,8 @@
-DO
-$do$
-BEGIN
+CREATE OR REPLACE PROCEDURE database_bookings()
+
+LANGUAGE plpgsql AS
+
+$$ BEGIN
    IF EXISTS (SELECT FROM pg_extension WHERE extname = 'dblink') THEN
       RAISE NOTICE 'Extension dblink already exists';
    ELSE
@@ -13,5 +15,6 @@ BEGIN
       PERFORM dblink_exec('dbname=' || current_database()
                         , 'CREATE DATABASE bookings');
    END IF;
-END
-$do$;
+END $$;
+
+CALL database_bookings();
