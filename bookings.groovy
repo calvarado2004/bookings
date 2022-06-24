@@ -22,12 +22,19 @@ node('worker0') {
 
     }
     
-    stage ('Push Container Image'){
+    stage ('Build Init Container') {
+           sh "sudo buildah bud -f Dockerfile-init -t ${CONTAINER_IMAGE}-init:${BUILD_TAG}"
+           sh "sudo buildah bud -f Dockerfile-init -t ${CONTAINER_IMAGE}-init:latest"
+    }
+
+    stage ('Push Container Images'){
         withCredentials([usernamePassword(credentialsId: 'docker-hub', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
             
             sh "sudo buildah login --username ${USERNAME} --password ${PASSWORD} docker.io"
             sh "sudo buildah push  ${CONTAINER_IMAGE}:${BUILD_TAG}"
             sh "sudo buildah push  ${CONTAINER_IMAGE}:latest"
+            sh "sudo buildah push  ${CONTAINER_IMAGE}-init:${BUILD_TAG}"
+            sh "sudo buildah push  ${CONTAINER_IMAGE}-init:latest"
         }
     }
     

@@ -1,0 +1,18 @@
+FROM busybox:stable as builder 
+ADD ./ /app
+WORKDIR /app
+RUN wget https://github.com/gobuffalo/pop/releases/download/v6.0.4/pop_6.0.4_linux_amd64.tar.gz && tar -xvzf pop_6.0.4_linux_amd64.tar.gz
+
+
+FROM busybox:stable
+ENV APP_HOME /app
+RUN adduser 1001 -D -h $APP_HOME && mkdir -p $APP_HOME && chown 1001:1001 $APP_HOME
+USER 1001
+WORKDIR $APP_HOME
+COPY ./database.yml database.yml 
+COPY ./migrations migrations/
+COPY ./admin_migrations admin_migrations/
+COPY ./migrations.sh migrations.sh
+COPY --chown=0:0 --from=builder /app/soda /usr/local/bin/soda
+
+CMD ["/app/migrations.sh"]

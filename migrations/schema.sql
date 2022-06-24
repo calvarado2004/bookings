@@ -16,29 +16,6 @@ SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
---
--- Name: todos; Type: SCHEMA; Schema: -; Owner: postgres
---
-
-CREATE SCHEMA todos;
-
-
-ALTER SCHEMA todos OWNER TO postgres;
-
---
--- Name: dblink; Type: EXTENSION; Schema: -; Owner: -
---
-
-CREATE EXTENSION IF NOT EXISTS dblink WITH SCHEMA public;
-
-
---
--- Name: EXTENSION dblink; Type: COMMENT; Schema: -; Owner: 
---
-
-COMMENT ON EXTENSION dblink IS 'connect to other PostgreSQL databases from within a database';
-
-
 SET default_tablespace = '';
 
 SET default_table_access_method = heap;
@@ -57,7 +34,8 @@ CREATE TABLE public.reservations (
     end_date date NOT NULL,
     room_id integer NOT NULL,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    processed integer DEFAULT 0 NOT NULL
 );
 
 
@@ -129,8 +107,8 @@ CREATE TABLE public.room_restrictions (
     id integer NOT NULL,
     start_date date NOT NULL,
     end_date date NOT NULL,
-    room_id integer NOT NULL,
-    reservation_id integer NOT NULL,
+    room_id integer,
+    reservation_id integer,
     restriction_id integer NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
@@ -249,30 +227,6 @@ ALTER SEQUENCE public.users_id_seq OWNED BY public.users.id;
 
 
 --
--- Name: todos; Type: TABLE; Schema: todos; Owner: camartinez
---
-
-CREATE TABLE todos.todos (
-    item text
-);
-
-
-ALTER TABLE todos.todos OWNER TO camartinez;
-
---
--- Name: users; Type: TABLE; Schema: todos; Owner: postgres
---
-
-CREATE TABLE todos.users (
-    id integer NOT NULL,
-    first_name character varying,
-    last_name character varying
-);
-
-
-ALTER TABLE todos.users OWNER TO postgres;
-
---
 -- Name: reservations id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -344,14 +298,6 @@ ALTER TABLE ONLY public.rooms
 --
 
 ALTER TABLE ONLY public.users
-    ADD CONSTRAINT users_pkey PRIMARY KEY (id);
-
-
---
--- Name: users users_pkey; Type: CONSTRAINT; Schema: todos; Owner: postgres
---
-
-ALTER TABLE ONLY todos.users
     ADD CONSTRAINT users_pkey PRIMARY KEY (id);
 
 
