@@ -25,20 +25,6 @@ CREATE SCHEMA todos;
 
 ALTER SCHEMA todos OWNER TO postgres;
 
---
--- Name: dblink; Type: EXTENSION; Schema: -; Owner: -
---
-
-CREATE EXTENSION IF NOT EXISTS dblink WITH SCHEMA public;
-
-
---
--- Name: EXTENSION dblink; Type: COMMENT; Schema: -; Owner: 
---
-
-COMMENT ON EXTENSION dblink IS 'connect to other PostgreSQL databases from within a database';
-
-
 SET default_tablespace = '';
 
 SET default_table_access_method = heap;
