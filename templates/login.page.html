@@ -2,7 +2,7 @@
 
 {{define "content"}}
 
-<div class="container">
+<div class="container content">
     <div class="row">
         <div class="col">
             <h1> Login </h1>
@@ -10,7 +10,7 @@
             <form method="post" action="/bookings/user/login" novalidate>
                 <input type="hidden" name="csrf_token" value="{{.CSRFToken}}">
 
-                <div class="form-group mt-9">
+                <div class="form-group mt-9 content">
 
                     <label for="email">Email</label>
                     {{with .Form.Errors.Get "email"}}
@@ -20,7 +20,7 @@
     
                 </div>
 
-                <div class="form-group mt-9">
+                <div class="form-group mt-9 content">
 
                     <label for="password">Password</label>
                     {{with .Form.Errors.Get "password"}}
@@ -30,7 +30,7 @@
     
                 </div>
 
-                <input type="submit" class="btn btn-primary" value="Submit">
+                <input type="submit" class="btn btn-primary content" value="Submit">
 
             </form>
 

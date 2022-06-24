@@ -2,18 +2,25 @@
 
 {{define "content"}}
 
-<div class="container">
+<div class="container content">
     <div class="row">
-        <div class="col">
-            <h1> This is the About Page </h1>
-            <p>This is some content on the about page.</p>
-            <p>This is more text on the about page.</p>
-            <p>This is more text on the about page.</p>
 
-            <p> This came from the template {{index .StringMap "test"}}</p>
+        <h1> About us.</h1>
 
+        <div class="col content">
+
+            <img src="/bookings/static/images/outside.jpg?tr=w-1,h-1:w-1024,h-800" class="d-block w-100 lazy" alt="Outside" alt="dominant color placeholder">
 
         </div>
+
+          <div class="col content">
+
+            <h4> This application is a project that uses Portworx on its Database!</h4>
+            <p>It runs entirely on Kubernetes.</p>
+            <p>And it has been built using Jenkins and deployed with ArgoCD.</p>
+
+          </div>
+
     </div>
 </div>
 
