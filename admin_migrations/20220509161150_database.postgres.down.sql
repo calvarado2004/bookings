@@ -10,7 +10,7 @@ $$ BEGIN
    END IF;
 
    IF EXISTS (SELECT FROM pg_database WHERE datname = 'bookings') THEN
-      PERFORM dblink_exec('host=postgres-headless-svc user=postgres dbname=postgres password=WbrTpN3g7q', 'DROP DATABASE bookings');
+      PERFORM dblink_exec('user={{ DB_USER }} password={{ DB_PASSWORD }}', 'DROP DATABASE bookings');
       DROP EXTENSION dblink;
    END IF;
 END $$;
