@@ -12,7 +12,7 @@ $$ BEGIN
    IF EXISTS (SELECT FROM pg_database WHERE datname = 'bookings') THEN
       RAISE NOTICE 'Database already exists';
    ELSE
-      PERFORM dblink_exec('user=postgres dbname=postgres', 'CREATE DATABASE bookings');
+      PERFORM dblink_exec('host=postgres-headless-svc user=postgres dbname=postgres password=WbrTpN3g7q', 'CREATE DATABASE bookings');
    END IF;
 END $$;
 
