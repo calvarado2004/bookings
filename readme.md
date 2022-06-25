@@ -55,7 +55,7 @@ Compile and start the application:
 
 The application will be available here: 
 
-[localhost:8080/bookings](localhost:8080/bookings)
+[localhost:8080/bookings](http://localhost:8080/bookings)
 
 
 # Jenkins pipeline for Continuous Integration
