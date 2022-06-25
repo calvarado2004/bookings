@@ -6,13 +6,14 @@ RUN wget https://github.com/gobuffalo/pop/releases/download/v6.0.4/pop_6.0.4_lin
 
 FROM busybox:stable
 ENV APP_HOME /app
-RUN adduser postgres -D -h $APP_HOME && mkdir -p $APP_HOME && chown postgres:postgres $APP_HOME
-USER postgres
 WORKDIR $APP_HOME
 COPY ./database.yml database.yml 
 COPY ./migrations migrations/
 COPY ./admin_migrations admin_migrations/
 COPY ./migrations.sh migrations.sh
 COPY --chown=0:0 --from=builder /app/soda /usr/local/bin/soda
+RUN adduser postgres -D -h $APP_HOME && mkdir -p $APP_HOME && chown -R postgres:postgres $APP_HOME
+USER postgres
+
 
 CMD ["/app/migrations.sh"]
