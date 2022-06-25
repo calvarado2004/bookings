@@ -19,6 +19,45 @@ Use the following credentials to check the admin site:
 
 ![Calendar](./images/calendar.png)
 
+# Test this application locally
+
+Install an start a local PostgreSQL instance and set the `postgres` user password to `postgres`:
+
+[Download PostgreSQL](https://www.postgresql.org/download/)
+
+Install Go 1.18.1 or newer:
+
+[Download Go](https://go.dev/dl/)
+
+Download this project:
+
+```
+git clone https://github.com/calvarado2004/bookings
+```
+
+Init the Go modules:
+
+```
+go mod init github.com/calvarado2004/bookings
+go mod tidy
+go get github.com/alexedwards/scs/v2
+go get github.com/go-chi/chi/v5
+go get github.com/justinas/nosurf
+go get github.com/asaskevich/govalidator 
+go get github.com/xhit/go-simple-mail/v2
+```
+
+Compile and start the application:
+
+```
+./run.sh
+```
+
+The application will be available here: 
+
+[localhost:8080/bookings](localhost:8080/bookings)
+
+
 # Jenkins pipeline for Continuous Integration
 
 This project generates two containers, the init container to make the DB migrations with [Soda](https://gobuffalo.io/documentation/database/migrations/) and the main application container.
@@ -36,5 +75,12 @@ The container images are being uploaded to the Docker Hub Public registry
 
 ![Docker Hub](./images/docker-hub.png)
 
+# Integration with MailHog
 
+This application includes [MailHog](https://github.com/mailhog/MailHog) integration, however, is not configured with any email server. You would have to configure that if you really want to test this feature.
 
+MailHog by default can be accessed through the port 8025:
+
+[localhost:8025](http://localhost:8025)
+
+![MailHog](./images/mailhog.png)
