@@ -19,7 +19,7 @@
             <strong>Room:</strong> {{$res.Room.RoomName}}<br>
         </p>
 
-        <form method="post" action="/bookings-admin/reservations/{{$src}}/{{$res.ID}}" class="" novalidate>
+        <form method="post" action="/bookings/admin/reservations/{{$src}}/{{$res.ID}}" class="" novalidate>
             <input type="hidden" name="csrf_token" value="{{.CSRFToken}}">
             <input type="hidden" name="year" value="{{index .StringMap "year"}}">
             <input type="hidden" name="month" value="{{index .StringMap "month"}}">
@@ -68,7 +68,7 @@
                 {{if eq $src "cal"}}
                     <a href="#!" onclick="window.history.go(-1)" class="btn btn-warning">Cancel</a>
                 {{else}}
-                    <a href="/bookings-admin/reservations/{{$src}}" class="btn btn-warning">Cancel</a>
+                    <a href="/bookings/admin/reservations/{{$src}}" class="btn btn-warning">Cancel</a>
                 {{end}}
                 <a href="#!" class="btn btn-info" onclick="processRes({{$res.ID}})" >Mark as Processed</a>
             </div>
@@ -106,7 +106,7 @@
             msg: 'Are you sure?',
             callback: function(result) {
                 if (result !== false) {
-                    window.location.href = "/bookings-admin/reservations/process-reservation/{{$src}}/" + id + "/do?y={{index .StringMap "year"}}&m={{index .StringMap "month"}}";
+                    window.location.href = "/bookings/admin/reservations/process-reservation/{{$src}}/" + id + "/do?y={{index .StringMap "year"}}&m={{index .StringMap "month"}}";
                 }
             },
         })
@@ -122,7 +122,7 @@
             msg: 'Are you sure to delete it?',
             callback: function(result) {
                 if (result !== false) {
-                    window.location.href = "/bookings-admin/reservations/delete-reservation/{{$src}}/" + id + "/do?y={{index .StringMap "year"}}&m={{index .StringMap "month"}}";
+                    window.location.href = "/bookings/admin/reservations/delete-reservation/{{$src}}/" + id + "/do?y={{index .StringMap "year"}}&m={{index .StringMap "month"}}";
                 }
             },
         })
