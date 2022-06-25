@@ -665,7 +665,7 @@ func (m *Repository) AdminShowReservations(w http.ResponseWriter, r *http.Reques
 
 	exploded := strings.Split(r.RequestURI, "/")
 
-	id, err := strconv.Atoi(exploded[4])
+	id, err := strconv.Atoi(exploded[5])
 	if err != nil {
 		helpers.ServerError(w, err)
 		return
@@ -673,7 +673,7 @@ func (m *Repository) AdminShowReservations(w http.ResponseWriter, r *http.Reques
 
 	//log.Println(id)
 
-	src := exploded[3]
+	src := exploded[4]
 
 	stringMap := make(map[string]string)
 
@@ -715,13 +715,13 @@ func (m *Repository) AdminPostShowReservations(w http.ResponseWriter, r *http.Re
 
 	exploded := strings.Split(r.RequestURI, "/")
 
-	id, err := strconv.Atoi(exploded[4])
+	id, err := strconv.Atoi(exploded[5])
 	if err != nil {
 		helpers.ServerError(w, err)
 		return
 	}
 
-	src := exploded[3]
+	src := exploded[4]
 
 	stringMap := make(map[string]string)
 
