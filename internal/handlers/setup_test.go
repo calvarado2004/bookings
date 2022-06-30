@@ -23,10 +23,20 @@ import (
 var app config.AppConfig
 var session *scs.SessionManager
 var pathToTemplates = "./../../templates"
-var functions = template.FuncMap{}
+
+var functions = template.FuncMap{
+	"humanDate":  render.HumanDate,
+	"formatDate": render.FormatDate,
+	"iterate":    render.Iterate,
+	"add":        render.Add,
+}
 
 func TestMain(m *testing.M) {
 	gob.Register(models.Reservation{})
+	gob.Register(models.User{})
+	gob.Register(models.Room{})
+	gob.Register(models.Restriction{})
+	gob.Register(map[string]int{})
 
 	// change this to true when in production
 	app.InProduction = false
@@ -46,9 +56,7 @@ func TestMain(m *testing.M) {
 	app.Session = session
 
 	mailChan := make(chan models.MailData)
-
 	app.MailChan = mailChan
-
 	defer close(mailChan)
 
 	listenForMail()
@@ -74,7 +82,6 @@ func listenForMail() {
 			_ = <-app.MailChan
 		}
 	}()
-
 }
 
 func getRoutes() http.Handler {
@@ -84,24 +91,45 @@ func getRoutes() http.Handler {
 	//mux.Use(NoSurf)
 	mux.Use(SessionLoad)
 
-	mux.Get("/bookings", Repo.Home)
-	mux.Get("/bookings/about", Repo.About)
-	mux.Get("/bookings/generals-quarters", Repo.Generals)
-	mux.Get("/bookings/majors-suite", Repo.Majors)
+	mux.Route("/bookings", func(mux chi.Router) {
 
-	mux.Get("/bookings/availability", Repo.Availability)
-	mux.Post("/bookings/availability", Repo.PostAvailability)
-	mux.Post("/bookings/availability-json", Repo.AvailabilityJSON)
+		mux.Get("/", Repo.Home)
+		mux.Get("/about", Repo.About)
+		mux.Get("/generals-quarters", Repo.Generals)
+		mux.Get("/majors-suite", Repo.Majors)
 
-	mux.Get("/bookings/contact", Repo.Contact)
+		mux.Get("/availability", Repo.Availability)
+		mux.Post("/availability", Repo.PostAvailability)
+		mux.Post("/availability-json", Repo.AvailabilityJSON)
 
-	mux.Get("/bookings/reservation", Repo.Reservation)
-	mux.Post("/bookings/reservation", Repo.PostReservation)
-	mux.Get("/bookings/reservation-summary", Repo.ReservationSummary)
-	mux.Get("/bookings/specials", Repo.Specials)
+		mux.Get("/contact", Repo.Contact)
 
-	fileServer := http.FileServer(http.Dir("./../../static/"))
-	mux.Handle("/bookings/static/*", http.StripPrefix("/bookings/static", fileServer))
+		mux.Get("/reservation", Repo.Reservation)
+		mux.Post("/reservation", Repo.PostReservation)
+		mux.Get("/reservation-summary", Repo.ReservationSummary)
+		mux.Get("/specials", Repo.Specials)
+
+		mux.Get("/user/login", Repo.Showlogin)
+		mux.Post("/user/login", Repo.PostShowlogin)
+
+		mux.Get("/user/logout", Repo.Logout)
+
+		mux.Get("/admin/dashboard", Repo.AdminDashboard)
+
+		mux.Get("/admin/reservations/new", Repo.AdminAllNewReservations)
+		mux.Get("/admin/reservations/all", Repo.AdminAllReservations)
+		mux.Get("/admin/reservations/calendar", Repo.AdminCalendarReservations)
+		mux.Post("/admin/reservations/calendar", Repo.AdminPostCalendar)
+		mux.Get("/admin/process-reservation/{src}/{id}/do", Repo.AdminProcessReservations)
+		mux.Get("/admin/delete-reservation/{src}/{id}/do", Repo.AdminDeleteReservations)
+
+		mux.Get("/admin/reservations/{src}/{id}/show", Repo.AdminShowReservations)
+		mux.Post("/admin/reservations/{src}/{id}", Repo.AdminPostShowReservations)
+
+		fileServer := http.FileServer(http.Dir("./../../static/"))
+		mux.Handle("/static/*", http.StripPrefix("/bookings/static", fileServer))
+
+	})
 
 	return mux
 }
@@ -129,8 +157,9 @@ func CreateTestTemplateCache() (map[string]*template.Template, error) {
 
 	myCache := map[string]*template.Template{}
 
-	pages, err := filepath.Glob(fmt.Sprintf("%s/*.page.html", pathToTemplates))
+	pages, err := filepath.Glob(fmt.Sprintf("%s/*.page.tmpl", pathToTemplates))
 	if err != nil {
+		log.Println(err)
 		return myCache, err
 	}
 
@@ -138,17 +167,20 @@ func CreateTestTemplateCache() (map[string]*template.Template, error) {
 		name := filepath.Base(page)
 		ts, err := template.New(name).Funcs(functions).ParseFiles(page)
 		if err != nil {
+			log.Println(err)
 			return myCache, err
 		}
 
-		matches, err := filepath.Glob(fmt.Sprintf("%s/*.layout.html", pathToTemplates))
+		matches, err := filepath.Glob(fmt.Sprintf("%s/*.layout.tmpl", pathToTemplates))
 		if err != nil {
+			log.Println(err)
 			return myCache, err
 		}
 
 		if len(matches) > 0 {
-			ts, err = ts.ParseGlob(fmt.Sprintf("%s/*.layout.html", pathToTemplates))
+			ts, err = ts.ParseGlob(fmt.Sprintf("%s/*.layout.tmpl", pathToTemplates))
 			if err != nil {
+				log.Println(err)
 				return myCache, err
 			}
 		}
