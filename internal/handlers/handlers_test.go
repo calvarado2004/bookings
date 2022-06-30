@@ -81,10 +81,10 @@ var reservationTests = []struct {
 		},
 		expectedStatusCode: http.StatusOK,
 		expectedLocation:   "",
-		//expectedLocation:   "/bookings/reservation",
+		//expectedLocation: "/bookings",
 		//expectedHTML: "/bookings",
-		//expectedHTML: `action="/bookings/reservation"`,
-		expectedHTML: "",
+		expectedHTML: `action="/bookings/reservation"`,
+		//expectedHTML: "",
 	},
 	{
 		name:               "reservation-not-in-session",
