@@ -21,7 +21,7 @@ Use the following credentials to check the admin site:
 
 # Test this application locally
 
-Install an start a local PostgreSQL instance and set the `postgres` user password to `postgres`:
+Install and start a local PostgreSQL instance and set the `postgres` user password to `postgres`:
 
 [Download PostgreSQL](https://www.postgresql.org/download/)
 
