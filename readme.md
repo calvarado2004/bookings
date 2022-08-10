@@ -84,3 +84,9 @@ MailHog by default can be accessed through the port 8025:
 [localhost:8025](http://localhost:8025)
 
 ![MailHog](./images/mailhog.png)
+
+# Continuous Deployment with ArgoCD
+
+ArgoCD can control its automatic deployment from the cd repository [bookings-cd](https://github.com/calvarado2004/bookings-cd)
+
+![ArgoCD](./images/argocd.png)
