@@ -13,6 +13,7 @@ COPY ./admin_migrations admin_migrations/
 COPY ./migrations.sh migrations.sh
 COPY --chown=0:0 --from=builder /app/soda /usr/local/bin/soda
 RUN adduser postgres -D -h $APP_HOME && mkdir -p $APP_HOME && chown -R postgres:postgres $APP_HOME
+RUN chgrp -R 0 /app && chmod -R g=u /app
 USER postgres
 
 
