@@ -1,4 +1,4 @@
-FROM docker.io/bitnami/golang:1.18.1 AS builder
+FROM docker.io/bitnami/golang:1.19 AS builder
 ADD ./ /app
 WORKDIR /app
 RUN go mod init github.com/calvarado2004/bookings && go mod tidy && go get github.com/alexedwards/scs/v2 && go get github.com/go-chi/chi/v5 && go get github.com/justinas/nosurf && go get github.com/asaskevich/govalidator && go get github.com/xhit/go-simple-mail/v2 
