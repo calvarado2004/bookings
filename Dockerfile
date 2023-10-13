@@ -14,4 +14,4 @@ COPY ./static static/
 COPY ./email-templates email-templates/
 COPY --chown=0:0 --from=builder /app/bookings ./
 EXPOSE 8080
-CMD ["./bookings"]
+CMD ["/app/bookings"]
